@@ -1,15 +1,18 @@
 package me.vichea.corebaking.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import me.vichea.corebaking.common.CommonResult;
 import me.vichea.corebaking.dto.SignUpRequest;
 import me.vichea.corebaking.dto.SignUpResponse;
 import me.vichea.corebaking.entity.User;
+import me.vichea.corebaking.repository.UserRepository;
 import me.vichea.corebaking.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,12 @@ import java.util.List;
 public class UserController {
 
         private final UserService userService;
-
+        private final UserRepository userRepository;
+        @PreAuthorize("hasAuthority('ACCOUNT:READ') ")
         @GetMapping
         public List<User> list() {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            System.out.println("auth in rest:"+authentication.getAuthorities().iterator().next().getAuthority());
             return userService.findAll();
         }
         @PostMapping("/signup")

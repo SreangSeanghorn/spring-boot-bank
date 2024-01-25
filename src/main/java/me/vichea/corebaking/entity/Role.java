@@ -19,11 +19,14 @@ public class Role {
     private String name;
     private String code;
     private String description;
-    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles")
+    private Collection<User> users;
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")}
     )
+
     private Collection<Permission> permissions;
 }

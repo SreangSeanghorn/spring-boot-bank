@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -34,6 +36,15 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("The Authority has been called....");
+        List<GrantedAuthority> Roles = roles.stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission -> (GrantedAuthority) permission::getCode)
+                .toList();
+        for(GrantedAuthority r:Roles){
+            System.out.println("role is:"+r.getAuthority());
+        }
+
         return roles.stream()
                 .flatMap(role -> role.getPermissions().stream())
                 .map(permission -> (GrantedAuthority) permission::getCode)

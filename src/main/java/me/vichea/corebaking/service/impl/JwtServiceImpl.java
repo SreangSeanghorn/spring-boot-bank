@@ -21,11 +21,13 @@ public class JwtServiceImpl implements JwtService {
     private String jwtSigningKey;
     @Override
     public String extractUserName(String token) {
+
         return extractClaim(token, Claims::getSubject);
     }
 
     @Override
     public String generateToken(UserDetails userDetails) {
+
         return generateToken(new HashMap<>(), userDetails);
     }
 

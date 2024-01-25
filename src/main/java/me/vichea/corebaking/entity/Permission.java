@@ -3,6 +3,8 @@ package me.vichea.corebaking.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Collection;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,4 +19,6 @@ public class Permission {
     private String code;
     private String name;
     private String description;
+    @ManyToMany(mappedBy = "permissions")
+    private Collection<Role> roles;
 }

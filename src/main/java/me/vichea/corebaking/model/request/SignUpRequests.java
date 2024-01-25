@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.vichea.corebaking.entity.Permission;
 import me.vichea.corebaking.entity.Role;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Builder
@@ -21,5 +23,6 @@ public class SignUpRequests{
     private String email;
     private String password;
     private String permission;
-    private Collection<Role> roles;
+    private long role_id;
+    private List<Long> permission_ids;
 }
