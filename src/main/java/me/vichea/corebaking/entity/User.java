@@ -1,5 +1,6 @@
 package me.vichea.corebaking.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @Entity
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+//Ignoring new fields on JSON objects
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class User implements UserDetails {
     @Id

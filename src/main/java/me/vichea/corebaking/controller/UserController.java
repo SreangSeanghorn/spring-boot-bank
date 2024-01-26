@@ -31,6 +31,7 @@ public class UserController {
         public List<User> list() {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             System.out.println("auth in rest:"+authentication.getAuthorities().iterator().next().getAuthority());
+           // return null;
             return userService.findAll();
         }
         @PostMapping("/signup")
