@@ -1,5 +1,7 @@
 package me.vichea.corebaking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,6 +20,7 @@ import java.util.Objects;
 @Entity
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 //Ignoring new fields on JSON objects
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = "username")})
 public class User implements UserDetails {
     @Id
@@ -29,6 +32,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private UserStatus status;
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
